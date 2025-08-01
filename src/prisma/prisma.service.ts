@@ -11,12 +11,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
           url: process.env.DATABASE_URL,
         },
       },
-      // Configuración optimizada para Vercel y bases de datos con límite de conexiones
-      __internal: {
-        engine: {
-          connectionLimit: 1,
-        },
-      },
     });
   }
 
