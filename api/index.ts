@@ -19,7 +19,7 @@ async function bootstrap() {
     // Configurar CORS
     app.enableCors();
 
-    // Configurar Swagger
+    // Configurar Swagger con rutas personalizadas
     const config = new DocumentBuilder()
       .setTitle('API de Gestión de Inventario')
       .setDescription('API RESTful para administrar inventario, usuarios, productos y categorías')
@@ -28,7 +28,22 @@ async function bootstrap() {
       .build();
     
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
+    
+    // Configurar Swagger con opciones personalizadas para Vercel
+    SwaggerModule.setup('api', app, document, {
+      customCss: '.swagger-ui .topbar { display: none }',
+      customSiteTitle: 'API de Inventario',
+      swaggerOptions: {
+        docExpansion: 'list',
+        filter: true,
+        showRequestHeaders: true,
+      },
+      customJs: [
+        'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.9.0/swagger-ui-bundle.js',
+        'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.9.0/swagger-ui-standalone-preset.js'
+      ],
+      customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.9.0/swagger-ui.css',
+    });
 
     await app.init();
   }
